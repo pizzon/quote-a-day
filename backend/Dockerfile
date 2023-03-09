@@ -13,7 +13,7 @@ ENV DEBUG=True
 
 COPY . .
 
-RUN python manage.py makemigrations && python manage.py migrate
+#RUN python manage.py makemigrations && python manage.py migrate
 
 RUN chmod +x /src/server-entrypoint.sh
 RUN chmod +x /src/worker-entrypoint.sh

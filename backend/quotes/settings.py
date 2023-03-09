@@ -76,9 +76,13 @@ WSGI_APPLICATION = 'quotes.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "db",  
+        "PORT": 5432, 
     }
 }
 
@@ -153,11 +157,11 @@ CELERY_BEAT_SCHEDULE = {
     },
     '1pm-sms-quote': {
         'task': 'core.tasks.queue_sms_task',
-        'schedule': crontab(hour=18, minute=0)
+        'schedule': 60.0
     },
     'get-new-quote':{
         'task': 'core.tasks.get_quote_task',
-        'schedule': crontab(hour=17, minute=50)
+        'schedule': 30.0
     }
 
 }

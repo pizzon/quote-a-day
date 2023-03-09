@@ -13,6 +13,8 @@ services:
       - QUOTES_API_KEY=$QUOTES_API_KEY
       - TWILIO_API_KEY=$TWILIO_API_KEY
       - TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID
+    depends_on:
+      - db
   worker:
     build: ./backend
     entrypoint: /src/worker-entrypoint.sh
@@ -36,6 +38,15 @@ services:
       - "80:80"
   redis:
     image: redis
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
 volumes:
   static_volue: {}
+  postgres_data:

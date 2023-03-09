@@ -1,10 +1,10 @@
 version: "3.9"
 services:
   quotes:
-    image: npizzo/backend-prod:1.1
+    image: npizzo/backend-prod:postgres
     entrypoint: /src/server-entrypoint.sh
     volumes:
-      - static_volue:/src/backend/django_static
+      - static_volue:/src/backend/django_sqlite
     ports:
       - "8000:8000"
     environment:
@@ -16,11 +16,13 @@ services:
       - EMAIL_HOST=$EMAIL_HOST
       - EMAIL_HOST_USER=$EMAIL_HOST_USER
       - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
+    depends_on:
+      - db
   worker:
-    image: npizzo/backend-prod:1.1
+    image: npizzo/backend-prod:postgres
     entrypoint: /src/worker-entrypoint.sh
     volumes:
-      - static_volue:/src/backend/django_static
+      - static_volue:/src/backend/django_sqlite
     environment:
       - SECRET_KEY=$SECRET_KEY
       - DEBUG=$DEBUG
@@ -34,12 +36,21 @@ services:
       - quotes
       - redis
   nginx:
-    image: npizzo/webserver-prod:1.1
+    image: npizzo/webserver-prod:postgres
     restart: always
     ports:
       - "80:80"
   redis:
     image: redis
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
 volumes:
   static_volue: {}
+  postgres_data:

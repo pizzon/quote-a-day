@@ -48,7 +48,7 @@ def queue_email_task():
     for email in emails:
         send_quote_email_task.delay(quote.quote, quote.author, email.email)
     for email in second_emails:
-        send_quote_email_task.dekay(quote.quote, quote.author,  email.email)
+        send_quote_email_task.delay(quote.quote, quote.author,  email.email)
 
 @shared_task()
 def send_quote_email_task(quote, quote_author, email):
