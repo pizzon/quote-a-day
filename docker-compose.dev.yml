@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  quotes:
+    build: ./backend
+    entrypoint: /src/server-entrypoint.sh
+    volumes:
+      - static_volue:/src/backend/django_static
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=$SECRET_KEY
+      - DEBUG=$DEBUG
+      - QUOTES_API_KEY=$QUOTES_API_KEY
+      - TWILIO_API_KEY=$TWILIO_API_KEY
+      - TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID
+  worker:
+    build: ./backend
+    entrypoint: /src/worker-entrypoint.sh
+    volumes:
+      - static_volue:/src/backend/django_static
+    environment:
+      - SECRET_KEY=$SECRET_KEY
+      - DEBUG=$DEBUG
+      - QUOTES_API_KEY=$QUOTES_API_KEY
+      - TWILIO_API_KEY=$TWILIO_API_KEY
+      - TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID
+    depends_on:
+      - quotes
+      - redis
+  nginx:
+    build: 
+      context: .
+      dockerfile: ./webserver/Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+  redis:
+    image: redis
+
+volumes:
+  static_volue: {}

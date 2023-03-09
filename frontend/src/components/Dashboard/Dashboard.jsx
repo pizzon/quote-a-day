@@ -15,7 +15,7 @@ export default function Dashboard() {
 
   useEffect( () => {
     async function UserDetails() {
-      const res = await fetch('http://127.0.0.1:8000/api/user/',
+      const res = await fetch(`http://54.90.8.129/api/user/`,
       {
         method: 'GET',
         headers: {
@@ -33,7 +33,7 @@ export default function Dashboard() {
   },[])
 
   async function handlePhoneRemove(phone_number){
-    await fetch('http://127.0.0.1:8000/api/user/',
+    await fetch(`http://54.90.8.129/api/user/`,
     {
       method: 'PATCH',
       headers: {
@@ -47,7 +47,7 @@ export default function Dashboard() {
   }
 
   async function handleEmailRemove(email){
-    await fetch('http://127.0.0.1:8000/api/user/',
+    await fetch(`http://54.90.8.129/api/user/`,
     {
       method: 'PATCH',
       headers: {
@@ -60,7 +60,7 @@ export default function Dashboard() {
   }
 
   async function handleEmailAdd(){
-    await fetch('http://127.0.0.1:8000/api/user/',
+    await fetch(`http://54.90.8.129/api/user/`,
     {
       method: 'PUT',
       headers: {
@@ -73,7 +73,7 @@ export default function Dashboard() {
   }
 
   async function handlePhoneAdd(){
-    await fetch('http://127.0.0.1:8000/api/user/',
+    await fetch(`http://54.90.8.129/api/user/`,
     {
       method: 'PUT',
       headers: {

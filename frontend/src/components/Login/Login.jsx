@@ -5,7 +5,8 @@ import './Login.css';
 
 
 async function loginUser(credentials) {
-  return fetch('http://127.0.0.1:8000/api/login/', {
+  const base_url = process.env.REACT_APP_BASE_URL
+  return fetch('http://54.90.8.129/api/login/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

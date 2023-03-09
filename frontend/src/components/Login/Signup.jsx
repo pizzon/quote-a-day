@@ -5,7 +5,7 @@ import './Signup.css';
 
 
 async function registerUser(credentials) {
-  return fetch('http://127.0.0.1:8000/api/register/',
+  return fetch(`http://54.90.8.129/api/register/`,
   {
     method: 'POST',
     headers: {
